@@ -3,6 +3,91 @@
 ![米饭星](http://cdn.mifanxing.com/mifan/img/favicon.ico)
 # 2.4.0
 
+### 2018年12月28日
+> article,创建nlp_dic_detial_log
+```sql
+    CREATE TABLE `nlp_dic_detial_log` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `date_node` int(8) unsigned NOT NULL COMMENT '日期',
+  `dic_id` bigint(20) unsigned NOT NULL COMMENT '词ID',
+  `ssid` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '会话标识',
+  `category_id` bigint(20) unsigned NOT NULL COMMENT '词典分类',
+  `number` int(10) unsigned NOT NULL COMMENT '计数标识',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '修改人',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `date_dic_id_ssid_unique` (`date_node`,`dic_id`,`ssid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+> article,创建nlp_dic_search_log
+```sql
+CREATE TABLE `nlp_dic_search_log` (
+  `id` bigint(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `date_node` int(8) unsigned NOT NULL COMMENT '日期',
+  `search_id` bigint(20) unsigned NOT NULL COMMENT '用户搜索词ID',
+  `ssid` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '会话标识',
+  `number` int(10) unsigned NOT NULL COMMENT '计数标识',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '修改人',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `modified` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `date_search_id_ssid_unique` (`date_node`,`search_id`,`ssid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+> article,创建nlp_dic_search
+```sql
+CREATE TABLE `nlp_dic_search` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `word` varchar(100) CHARACTER SET utf8 NOT NULL COMMENT '热门词汇',
+  `search_num` int(10) unsigned DEFAULT '1' COMMENT '搜索次数',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `word_unique` (`word`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+> article,创建nlp_dic_search
+```sql
+CREATE TABLE `nlp_dic_categories` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '词典分类名称',
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '使能 0禁止 1启用',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '创建人',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '修改人',
+  `created` datetime NOT NULL COMMENT '创建时间',
+  `modified` datetime NOT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+> article,创建dic_synonym
+```sql
+CREATE TABLE `dic_synonym` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `dic_id` bigint(20) unsigned NOT NULL COMMENT '词id',
+  `synonym` varchar(30) CHARACTER SET utf8 NOT NULL COMMENT '同义词',
+  `version` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '版本',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+> article,创建nlp_event
+```sql
+CREATE TABLE `nlp_event` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT 'nlp事件名称',
+  `last_time` datetime NOT NULL,
+  `last_id` bigint(20) unsigned NOT NULL,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `creator` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `modifier` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
 ### 2018年11月20日
 > wxrank.seeds 添加forum_id字段
 ```sql
